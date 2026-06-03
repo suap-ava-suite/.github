@@ -24,13 +24,11 @@ A **SUAP/AVA Suite** é um ecossistema open-source de integração entre **Siste
 
 ## Por que usar?
 
-| Problema comum | Como a Suite resolve |
-|---|---|
-| Cadastro manual de turmas e usuários no Moodle | Sincronização automática via API a partir do SGA |
-| Login separado para o AVA | Autenticação OAuth2 com as credenciais institucionais |
-| Alunos perdem cursos espalhados em vários Moodles | Painel unificado com todos os cursos em um só lugar |
-| Dependências Python inconsistentes entre projetos | Meta-pacote centralizado com versões travadas |
-| Assets CSS/JS duplicados em cada projeto | CDN compartilhado para toda a Suite |
+| Problema comum                                    | Como a Suite resolve                                  |
+|---------------------------------------------------|-------------------------------------------------------|
+| Cadastro manual de turmas e usuários no Moodle    | Sincronização automática via API a partir do SGA      |
+| Login separado para o AVA                         | Autenticação OAuth2 com as credenciais institucionais |
+| Alunos perdem cursos espalhados em vários Moodles | Painel unificado com todos os cursos em um só lugar   |
 
 ---
 
