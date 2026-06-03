@@ -18,7 +18,7 @@
 
 A **SUAP/AVA Suite** é um ecossistema open-source de integração entre **Sistemas de Gestão Acadêmica (SGA)** — como o SUAP, SIGAA e qAcadêmico — e o **Moodle LMS**. Com ela, instituições de ensino eliminam o trabalho manual de sincronização de turmas, alunos e professores: tudo flui automaticamente do SGA para o AVA, com notas e frequências sincronizadas de volta.
 
-> 🎯 **Projetada para o IFRN e pronta para qualquer instituição** que use o Moodle como AVA.
+> 🎯 **Projetada pela tradição em inovação do IFRN, pronta para qualquer instituição** que use o Moodle como AVA.
 
 ---
 
