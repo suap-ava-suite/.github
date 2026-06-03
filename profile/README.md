@@ -1,0 +1,25 @@
+# Suap/AVA Suite
+
+Suite de softwares.
+
+## Django Applications
+
+1. [`integrador_ava`](https://github.com/suap-ava-suite/djangoapp-integrador_ava) - O **Integrador AVA** é um **middleware** que conecta Sistemas de Gestão Acadêmica (SGA) ao Moodle. Suporta o Suap como padrão principal — pronto de fábrica para o IFRN — e o padrão SGA genérico para instituições que usam SIGAA, qAcadêmico ou outro sistema acadêmico.
+2. [`painel_ava`](https://github.com/suap-ava-suite/djangoapp-painel_ava) - O **Painel AVA** é um **dashboard** com todos os cursos e inscrições que dos AVA que com os quais ele integra, desta forma cada usuário tem acesso aos cursos/diários em que está inscrito sem precisar procurar em vários Moodles.
+
+
+## Moodle Plugins
+
+1. [`local_suap`](https://github.com/suap-ava-suite/moodle-local_suap) - O local_suap é um plugin local do Moodle responsável pelo núcleo da integração entre o AVA (Ambiente Virtual de Aprendizagem) e o SUAP (Sistema Unificado de Administração Pública), realizando a sincronização bidirecional de dados acadêmicos. Ele expõe endpoints que recebem requisições autenticadas por token, validam o payload JSON e executam um fluxo detalhado de sincronização que cria e atualiza automaticamente a estrutura hierárquica de categorias (Diários → Campus → Curso → Semestre → Turma), os cursos do Moodle com seus campos customizados, os usuários (alunos, professores, tutores e instrutores) com autenticação oAuth2, os grupos, as inscrições e as coortes com seus colaboradores. O processamento ocorre de forma assíncrona via tarefas agendadas do Moodle, e o plugin também coordena a sincronização de notas e faltas, retornando ao final as URLs dos diários e salas de coordenação gerados.
+2. [`tool_sga`]() - O tool_sga é um plugin do tipo Admin Tool para o Moodle que disponibiliza uma API REST destinada à sincronização de dados provenientes do SGA (Sistema de Gestão Acadêmica). Ele recebe requisições POST autenticadas via header Authentication: Token e aceita payloads JSON com informações acadêmicas para processamento — como exemplificado pelo endpoint /admin/tool/sga/api/sync/up/. O plugin contém estrutura de classes, banco de dados, configurações de admin e internacionalização, operando como ponto de entrada para fluxos de atualização vindos de sistemas externos de gestão acadêmica integrados ao ecossistema SUAP-AVA.
+3. [`tool_painelava`]() - O tool_painelava é um plugin Admin Tool para Moodle 4.0+ que fornece uma API externa (tool_painelava_get_user_courses) para o Painel AVA recuperar todos os cursos de um usuário organizados por tipo — Diário, FIC, Coordenação, Laboratório, Modelo e Outros. A resposta inclui campos customizados, papel principal e todos os papéis do usuário em cada curso, e a classificação dos tipos é configurável por campo personalizado e prefixos de nome curto definidos nas configurações de administração. O acesso é controlado por token de autenticação e pela capacidade tool/painelava:viewothercourses para consulta de cursos de terceiros, com registro opcional de eventos no log do Moodle e cobertura por testes unitários PHPUnit.
+3. [`auth_suap`]() - O auth_suap é um plugin de autenticação para o Moodle que implementa o fluxo OAuth2 do SUAP, permitindo que alunos, professores e servidores do IFRN façam login no AVA usando suas credenciais institucionais. No primeiro acesso, o plugin cria automaticamente o usuário no Moodle e sincroniza dados de perfil vindos da API rh/eu do SUAP — incluindo nome social, foto, e-mails (acadêmico, Google Classroom, secundário), CPF/passaporte, campus e tipo de usuário — e em logins subsequentes atualiza os campos dinâmicos mantendo os dados sempre consistentes com o sistema institucional. O plugin também disponibiliza um endpoint dispatch.php para geração de tokens de webservice para aplicações mobile, e integra-se opcionalmente ao local_suap para aplicar preferências padrão de usuário no primeiro login.
+
+
+## Python packages
+
+1. [`avaintegration_metapackage`](https://github.com/suap-ava-suite/pypkg-avaintegration_metapackage)- **Meta-pacote Python 3.14** que agrega todas as dependências necessárias para projetos Django 6.0 do ecossistema AVA do IFRN(Integrador AVA, Painel AVA, Gestor AVA e Leitor EaD).
+
+## CDN 
+
+1. [`cdn-suap_ava_suite`](https://github.com/suap-ava-suite/cdn-suap_ava_suite) - O cdn-suap_ava_suite é o repositório de assets estáticos centralizados (CDN) utilizado por toda a suíte SUAP-AVA, funcionando como ponto único de distribuição de recursos compartilhados entre os diferentes componentes do ecossistema. O repositório organiza seus arquivos em diretórios temáticos como css, dist, theme, painel, integrador, gestao e vendors, além de conter recursos de bibliotecas de terceiros (django_extensions, safedelete, unfold), favicons e ferramentas de debug, indicando que serve tanto o Painel AVA quanto os sistemas Django do Integrador. Também inclui um infografico.html que provavelmente documenta ou apresenta visualmente a arquitetura da integração SUAP-AVA para fins institucionais.
