@@ -1,25 +1,118 @@
-# Suap/AVA Suite
+<div align="center">
 
-Suite de softwares.
+<img src="https://raw.githubusercontent.com/suap-ava-suite/cdn-suap_ava_suite/main/favicons/favicon-96x96.png" alt="SUAP/AVA Suite" width="96" />
 
-## Django Applications
+# SUAP/AVA Suite
 
-1. [`integrador_ava`](https://github.com/suap-ava-suite/djangoapp-integrador_ava) - O **Integrador AVA** é um **middleware** que conecta Sistemas de Gestão Acadêmica (SGA) ao Moodle. Suporta o Suap como padrão principal — pronto de fábrica para o IFRN — e o padrão SGA genérico para instituições que usam SIGAA, qAcadêmico ou outro sistema acadêmico.
-2. [`painel_ava`](https://github.com/suap-ava-suite/djangoapp-painel_ava) - O **Painel AVA** é um **dashboard** com todos os cursos e inscrições que dos AVA que com os quais ele integra, desta forma cada usuário tem acesso aos cursos/diários em que está inscrito sem precisar procurar em vários Moodles.
+**A ponte entre o seu Sistema de Gestão Acadêmica e o Moodle — pronta para produção.**
 
+[
+[
+[
+[
+[
 
-## Moodle Plugins
+</div>
 
-1. [`local_suap`](https://github.com/suap-ava-suite/moodle-local_suap) - O local_suap é um plugin local do Moodle responsável pelo núcleo da integração entre o AVA (Ambiente Virtual de Aprendizagem) e o SUAP (Sistema Unificado de Administração Pública), realizando a sincronização bidirecional de dados acadêmicos. Ele expõe endpoints que recebem requisições autenticadas por token, validam o payload JSON e executam um fluxo detalhado de sincronização que cria e atualiza automaticamente a estrutura hierárquica de categorias (Diários → Campus → Curso → Semestre → Turma), os cursos do Moodle com seus campos customizados, os usuários (alunos, professores, tutores e instrutores) com autenticação oAuth2, os grupos, as inscrições e as coortes com seus colaboradores. O processamento ocorre de forma assíncrona via tarefas agendadas do Moodle, e o plugin também coordena a sincronização de notas e faltas, retornando ao final as URLs dos diários e salas de coordenação gerados.
-2. [`tool_sga`]() - O tool_sga é um plugin do tipo Admin Tool para o Moodle que disponibiliza uma API REST destinada à sincronização de dados provenientes do SGA (Sistema de Gestão Acadêmica). Ele recebe requisições POST autenticadas via header Authentication: Token e aceita payloads JSON com informações acadêmicas para processamento — como exemplificado pelo endpoint /admin/tool/sga/api/sync/up/. O plugin contém estrutura de classes, banco de dados, configurações de admin e internacionalização, operando como ponto de entrada para fluxos de atualização vindos de sistemas externos de gestão acadêmica integrados ao ecossistema SUAP-AVA.
-3. [`tool_painelava`]() - O tool_painelava é um plugin Admin Tool para Moodle 4.0+ que fornece uma API externa (tool_painelava_get_user_courses) para o Painel AVA recuperar todos os cursos de um usuário organizados por tipo — Diário, FIC, Coordenação, Laboratório, Modelo e Outros. A resposta inclui campos customizados, papel principal e todos os papéis do usuário em cada curso, e a classificação dos tipos é configurável por campo personalizado e prefixos de nome curto definidos nas configurações de administração. O acesso é controlado por token de autenticação e pela capacidade tool/painelava:viewothercourses para consulta de cursos de terceiros, com registro opcional de eventos no log do Moodle e cobertura por testes unitários PHPUnit.
-3. [`auth_suap`]() - O auth_suap é um plugin de autenticação para o Moodle que implementa o fluxo OAuth2 do SUAP, permitindo que alunos, professores e servidores do IFRN façam login no AVA usando suas credenciais institucionais. No primeiro acesso, o plugin cria automaticamente o usuário no Moodle e sincroniza dados de perfil vindos da API rh/eu do SUAP — incluindo nome social, foto, e-mails (acadêmico, Google Classroom, secundário), CPF/passaporte, campus e tipo de usuário — e em logins subsequentes atualiza os campos dinâmicos mantendo os dados sempre consistentes com o sistema institucional. O plugin também disponibiliza um endpoint dispatch.php para geração de tokens de webservice para aplicações mobile, e integra-se opcionalmente ao local_suap para aplicar preferências padrão de usuário no primeiro login.
+***
 
+## O que é a SUAP/AVA Suite?
 
-## Python packages
+A **SUAP/AVA Suite** é um ecossistema open-source de integração entre **Sistemas de Gestão Acadêmica (SGA)** — como o SUAP, SIGAA e qAcadêmico — e o **Moodle LMS**. Com ela, instituições de ensino eliminam o trabalho manual de sincronização de turmas, alunos e professores: tudo flui automaticamente do SGA para o AVA, com notas e frequências sincronizadas de volta.
 
-1. [`avaintegration_metapackage`](https://github.com/suap-ava-suite/pypkg-avaintegration_metapackage)- **Meta-pacote Python 3.14** que agrega todas as dependências necessárias para projetos Django 6.0 do ecossistema AVA do IFRN(Integrador AVA, Painel AVA, Gestor AVA e Leitor EaD).
+> 🎯 **Projetada para o IFRN e pronta para qualquer instituição** que use o Moodle como AVA.
 
-## CDN 
+***
 
-1. [`cdn-suap_ava_suite`](https://github.com/suap-ava-suite/cdn-suap_ava_suite) - O cdn-suap_ava_suite é o repositório de assets estáticos centralizados (CDN) utilizado por toda a suíte SUAP-AVA, funcionando como ponto único de distribuição de recursos compartilhados entre os diferentes componentes do ecossistema. O repositório organiza seus arquivos em diretórios temáticos como css, dist, theme, painel, integrador, gestao e vendors, além de conter recursos de bibliotecas de terceiros (django_extensions, safedelete, unfold), favicons e ferramentas de debug, indicando que serve tanto o Painel AVA quanto os sistemas Django do Integrador. Também inclui um infografico.html que provavelmente documenta ou apresenta visualmente a arquitetura da integração SUAP-AVA para fins institucionais.
+## Por que usar?
+
+| Problema comum | Como a Suite resolve |
+|---|---|
+| Cadastro manual de turmas e usuários no Moodle | Sincronização automática via API a partir do SGA |
+| Login separado para o AVA | Autenticação OAuth2 com as credenciais institucionais |
+| Alunos perdem cursos espalhados em vários Moodles | Painel unificado com todos os cursos em um só lugar |
+| Dependências Python inconsistentes entre projetos | Meta-pacote centralizado com versões travadas |
+| Assets CSS/JS duplicados em cada projeto | CDN compartilhado para toda a Suite |
+
+***
+
+## Arquitetura em um olhar
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                  Instituição de Ensino                  │
+│                                                         │
+│  ┌──────────────┐        ┌────────────────────────────┐ │
+│  │     SGA      │◄──────►│   Integrador AVA (Django)  │ │
+│  │ SUAP / SIGAA │        │   + Painel AVA (Django)    │ │
+│  └──────────────┘        └───────────┬────────────────┘ │
+│                                      │ REST API          │
+│                          ┌───────────▼────────────────┐ │
+│                          │        Moodle LMS          │ │
+│                          │  local_suap · tool_sga     │ │
+│                          │  auth_suap · tool_painelava│ │
+│                          └────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+```
+
+> 💡 Uma **GitHub Page** com o detalhamento completo da arquitetura e do fluxo de dados estará disponível em breve.
+
+***
+
+## Componentes
+
+### 🐍 Aplicações Django
+
+| Projeto | Descrição |
+|---|---|
+| [`integrador_ava`](https://github.com/suap-ava-suite/djangoapp-integrador_ava) | **Middleware** central que recebe dados do SGA e os sincroniza no Moodle. Suporta SUAP nativamente e qualquer SGA via padrão genérico. |
+| [`painel_ava`](https://github.com/suap-ava-suite/djangoapp-painel_ava) | **Dashboard** unificado: cada usuário visualiza todos os seus cursos e diários de todos os Moodles integrados em um único portal. |
+
+### 🔌 Plugins Moodle
+
+| Projeto | Tipo | Descrição |
+|---|---|---|
+| [`local_suap`](https://github.com/suap-ava-suite/moodle-local_suap) | Local Plugin | Núcleo da integração. Recebe os dados do Integrador AVA, sincroniza categorias, cursos, usuários, grupos, matrículas, coortes, notas e faltas. |
+| [`tool_sga`](https://github.com/suap-ava-suite/moodle-tool_sga) | Admin Tool | API REST para receber sincronizações vindas diretamente do SGA via `POST` autenticado por token. |
+| [`auth_suap`](https://github.com/suap-ava-suite/moodle-auth_suap) | Auth Plugin | Login via **OAuth2 do SUAP**. Cria e atualiza perfis automaticamente com foto, e-mail institucional, campus e tipo de usuário. |
+| [`tool_painelava`](https://github.com/suap-ava-suite/moodle-tool_painelava) | Admin Tool | API externa para o Painel AVA: retorna todos os cursos de um usuário organizados por tipo (Diário, FIC, Coordenação etc.). |
+
+### 📦 Pacotes Python
+
+| Projeto | Descrição |
+|---|---|
+| [`avaintegration_metapackage`](https://github.com/suap-ava-suite/pypkg-avaintegration_metapackage) | Meta-pacote Python 3.14 / Django 6.0 com todas as dependências do ecossistema AVA consolidadas e versionadas. |
+
+### 🗂️ Infraestrutura compartilhada
+
+| Projeto | Descrição |
+|---|---|
+| [`cdn-suap_ava_suite`](https://github.com/suap-ava-suite/cdn-suap_ava_suite) | CDN central de assets estáticos (CSS, JS, temas, favicons) compartilhados entre todos os projetos da Suite. |
+
+***
+
+## Começando
+
+Cada repositório possui seu próprio guia de instalação. Para um deploy completo da Suite, consulte a documentação de cada componente na seguinte ordem recomendada:
+
+1. **Plugins Moodle** → `moodle-local_suap`, `moodle-auth_suap`, `moodle-tool_sga`, `moodle-tool_painelava`
+2. **Aplicações Django** → `djangoapp-integrador_ava`, `djangoapp-painel_ava`
+3. **Meta-pacote Python** → `pypkg-avaintegration_metapackage`
+
+***
+
+## Contribuindo
+
+Contribuições são bem-vindas! Abra uma *issue* ou *pull request* no repositório correspondente ao componente que deseja melhorar. Siga as diretrizes de contribuição de cada projeto.
+
+***
+
+## Licença
+
+Distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` em cada repositório para mais detalhes.
+
+***
+
+<div align="center">
+  Desenvolvido com ❤️ para a comunidade de educação pública brasileira.
+</div>
