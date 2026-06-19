@@ -39,5 +39,6 @@ A **SUAP/AVA Suite** é um ecossistema open-source de integração entre **Siste
 ![SUAP/AVA Suite — Arquitetura](https://raw.githubusercontent.com/suap-ava-suite/cdn-suap_ava_suite/main/assets/diagram.png)
 
 </div>
-
-> 💡 Uma **GitHub Page** com o detalhamento completo do fluxo de dados estará disponível em breve.
+<div align="center">
+Quer conhecer mais? documentação da Suite em https://suap-ava-suite.github.io/ .
+</div>
